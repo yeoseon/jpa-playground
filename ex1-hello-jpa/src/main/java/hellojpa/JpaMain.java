@@ -5,6 +5,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.swing.*;
+import java.util.List;
 
 public class JpaMain {
 
@@ -17,11 +18,8 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member findMember = em.find(Member.class, 1L);
-            System.out.println("findMember = " + findMember.getId());
-            System.out.println("findMember = " + findMember.getName());
-
-            findMember.setName("HelloJPA");     // 따로 저장하지 않아도 수정된다.
+            List<Member> findMEmbers = em.createQuery("select m from Member as m", Member.class)
+                    .getResultList();
 
             tx.commit();
         } catch (Exception e) {
