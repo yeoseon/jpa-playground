@@ -21,7 +21,7 @@ public class JpaMain {
             System.out.println("findMember = " + findMember.getId());
             System.out.println("findMember = " + findMember.getName());
 
-            em.remove(findMember);  // 삭제
+            findMember.setName("HelloJPA");     // 따로 저장하지 않아도 수정된다.
 
             tx.commit();
         } catch (Exception e) {
