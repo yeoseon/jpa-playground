@@ -19,6 +19,8 @@ public class JpaMain {
 
         try {
             List<Member> findMEmbers = em.createQuery("select m from Member as m", Member.class)
+                    .setFirstResult(5)
+                    .getMaxResults(8)
                     .getResultList();
 
             tx.commit();
