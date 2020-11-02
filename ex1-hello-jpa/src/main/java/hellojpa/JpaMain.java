@@ -18,11 +18,19 @@ public class JpaMain {
         tx.begin();
 
         try {
-            List<Member> findMEmbers = em.createQuery("select m from Member as m", Member.class)
-                    .setFirstResult(5)
-                    .getMaxResults(8)
-                    .getResultList();
+            // 비영속 상태
+            Member member = new Member();
+            member.setId(100L);
+            member.setName("HelloJPA");
 
+            // 영속 상태
+            // em안의 영속성 컨텍스트 내부에 들어가 관리된다.
+            // 사실은 이때 DB에 저장되는 것이 아니다.
+            System.out.println("------------- BEFORE --------");
+            em.persist(member); // 사실 여기에서는 Query가 나가지 않는다.
+            System.out.println("------------- AFTER --------");
+
+            // 사실은 이 시점에 쿼리가 날라가는 것이다.
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
