@@ -1,5 +1,6 @@
 package hellojpa;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -8,8 +9,9 @@ public class Member {
 
     @Id
     private Long id;
+
+    @Column(unique = true, length = 10)
     private String name;
-    private int age;
 
     public Long getId() {
         return id;
