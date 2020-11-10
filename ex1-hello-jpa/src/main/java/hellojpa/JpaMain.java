@@ -17,9 +17,10 @@ public class JpaMain {
 
         try {
 //            // 비영속 상태
-//            Member member = new Member();
-//            member.setId(101L);
-//            member.setName("HelloJPA");
+            Member member = new Member();
+            member.setUsername("HelloJPA");
+
+            em.persist(member);
 //
 //            // 영속 상태
 //            // em안의 영속성 컨텍스트 내부에 들어가 관리된다.

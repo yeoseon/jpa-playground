@@ -7,6 +7,7 @@ import java.util.Date;
 public class Member {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(name = "name", nullable = false, columnDefinition = "varchar(100) default 'EMPTY'")
     private String username;
@@ -19,6 +20,14 @@ public class Member {
     private Date lastModifiedDate;
     @Lob                                // DLOB, CLOB 사용을 위해 설정 (@Lob에 String 타입이면 CLOB으로 사용된다.)
     private String description;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public Member() {}
 }
