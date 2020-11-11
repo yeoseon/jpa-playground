@@ -16,11 +16,24 @@ public class JpaMain {
         tx.begin();
 
         try {
-//            // 비영속 상태
-            Member member = new Member();
-            member.setUsername("HelloJPA");
 
-            em.persist(member);
+            //저장
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
+
+            Member member = new Member();       // 비영속 상태 (객체 생성)
+            member.setUsername("HelloJPA");
+            member.setTeam(team);
+            em.persist(member);                 // 영속 상태
+
+            em.flush();     // 영속성 컨텍스트에 있는 쿼리를 미리 실행한다. (find 쿼리 확인 위해)
+            em.clear();     // em 을 클리어 한다.
+
+            Member findMember = em.find(Member.class, member.getId());      // em.persist를 통해 영속성 컨텍스트에 들어갔다. 그러므로 이때 find는 1차캐시에서 가져온다. 따라서 find 쿼리는 실행되지 않는다. DB에서 join해서 가져오는 것을 확인하고 싶은 경우, flush 및 clear를 이용해 미리 insert 쿼리 넣고, em을 clear한다.
+
+            Team findTeam = findMember.getTeam();
+            System.out.println("team:" + team.getName());
 //
 //            // 영속 상태
 //            // em안의 영속성 컨텍스트 내부에 들어가 관리된다.

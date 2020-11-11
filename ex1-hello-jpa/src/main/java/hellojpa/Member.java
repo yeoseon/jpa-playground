@@ -17,9 +17,16 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,
                 generator = "MEMBER_SEQ_GENERATOR")
+    @Column(name = "MEMBER_ID")
     private Long id;
     @Column(name = "name", nullable = false, columnDefinition = "varchar(100) default 'EMPTY'")
     private String username;
+//    private Long teamId;                // 데이터 중심으로 설계한 좋지 않은 설계
+
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID")       // Member의 객체 Team의 참조와, Member 테이블의 Team_ID FK를 서로 맵핑시킨다.
+    private Team team;
+
     private Integer age;
     @Enumerated(EnumType.STRING)        // DB에는 없는 Enum 타입 사용을 위해 해당 어노테이션을 붙힌다.
     private RoleType roleType;
@@ -39,4 +46,20 @@ public class Member {
     }
 
     public Member() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
 }
