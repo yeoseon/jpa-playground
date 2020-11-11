@@ -12,10 +12,12 @@ public class Order {
     @Column(name = "ORDER_ID")
     private Long id;
 
-    @Column(name = "MEMBER_ID")
+    @Column(name = "MEMBER_ID")             // Springboot에서 JPA를 쓸 때는 memberId -> member_id로 변경된다.
     private Long memberId;
 
-    private LocalDateTime orderDate;
+    private Member member;                  // 객체 중심의 설계를 위해서 Member 객체 자체를 갖고, 연관관계 매핑을 하도록 한다.
+
+    private LocalDateTime orderDate;        // Springboot에서 JPA를 쓸 때는 orderDate -> order_date로 변경된다.
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
