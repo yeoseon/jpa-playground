@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class JpaMain {
 
@@ -32,14 +33,21 @@ public class JpaMain {
 
             Member findMember = em.find(Member.class, member.getId());      // em.persist를 통해 영속성 컨텍스트에 들어갔다. 그러므로 이때 find는 1차캐시에서 가져온다. 따라서 find 쿼리는 실행되지 않는다. DB에서 join해서 가져오는 것을 확인하고 싶은 경우, flush 및 clear를 이용해 미리 insert 쿼리 넣고, em을 clear한다.
 
-            Team findTeam = findMember.getTeam();
-            System.out.println("team:" + findTeam.getName());
+            // **양방향 연관관계 실습 코드
+            List<Member> members = findMember.getTeam().getMembers();
+            for(Member m : members) {
+                System.out.println("member = " + m.getUsername());
+            }
 
-            // Team을 변경하고 싶을 때 (연관관계 수정)
-            Team newTeam = em.find(Team.class, 100L);
-            findMember.setTeam(newTeam);        //  FK가 업데이트 된다.
-
+            // **단반향 연관관계 실습 코드
+//            Team findTeam = findMember.getTeam();
+//            System.out.println("team:" + findTeam.getName());
 //
+//            // Team을 변경하고 싶을 때 (연관관계 수정)
+//            Team newTeam = em.find(Team.class, 100L);
+//            findMember.setTeam(newTeam);        //  FK가 업데이트 된다.
+
+            // **영속상태 설명
 //            // 영속 상태
 //            // em안의 영속성 컨텍스트 내부에 들어가 관리된다.
 //            // 사실은 이때 DB에 저장되는 것이 아니다.
